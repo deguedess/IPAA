@@ -58,9 +58,9 @@ class Perfis(models.Model):
     nome = models.CharField(
         max_length=100, help_text='Informe o nome do perfil')
 
-    peso_inicial = models.IntegerField
+    peso_inicial = models.IntegerField()
 
-    peso_final = models.IntegerField
+    peso_final = models.IntegerField()
 
     tipo = models.CharField(
         max_length=50, help_text='Informe o tipo de perfil')
@@ -77,7 +77,7 @@ class Perguntas(models.Model):
     pergunta = models.CharField(
         max_length=500, help_text='Informe a pergunta')
 
-    tipo = models.BooleanField
+    tipo = models.BooleanField()
 
     def __str__(self):
         return self.pergunta
@@ -95,7 +95,7 @@ class Respostas(models.Model):
     resposta = models.CharField(
         max_length=200, help_text='Informe a resposta')
 
-    sequencia = models.IntegerField
+    sequencia = models.IntegerField()
 
     pontuacao = models.DecimalField(
         max_digits=6, decimal_places=4)
@@ -110,21 +110,21 @@ class Respostas(models.Model):
 
 class Usuarios(models.Model):
 
-    idade = models.IntegerField
+    idade = models.IntegerField()
 
-    genero = models.IntegerField
+    genero = models.IntegerField()
 
     grau_instrucao = models.ForeignKey(
-        'Grau_Instrucao', on_delete=models.SET_NULL, null=False)
+        'Grau_Instrucao', on_delete=models.SET_NULL, null=True)
 
     profissao = models.ForeignKey(
-        'Profissoes', on_delete=models.SET_NULL, null=False)
+        'Profissoes', on_delete=models.SET_NULL, null=True)
 
     data_cadastro = models.DateTimeField(
         null=False, blank=False, auto_now_add=True)
 
     perfil = models.ForeignKey(
-        'Perfis', on_delete=models.SET_NULL, null=False)
+        'Perfis', on_delete=models.SET_NULL, null=True)
 
 
 #
