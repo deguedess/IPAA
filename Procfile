@@ -1,1 +1,1 @@
-web: gunicorn site:IPAA_APP
+web: gunicorn IPAA_APP/IPAA_APP.wsgi --log-file -
