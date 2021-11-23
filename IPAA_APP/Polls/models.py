@@ -1,3 +1,4 @@
+from typing import Reversible
 from django.db import models
 
 # Create your models here.
@@ -81,6 +82,10 @@ class Pergunta(models.Model):
 
     def __str__(self):
         return self.pergunta
+
+    def get_absolute_url(self):
+        """Returns the url to access a detail record for this book."""
+        return Reversible('poll-detail', args=[str(self.id)])
 
 
 #
