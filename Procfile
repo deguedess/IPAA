@@ -1,1 +1,1 @@
-web: gunicorn Polls.wsgi --log-file -
+web: gunicorn IPAA_APP.wsgi --log-file -
