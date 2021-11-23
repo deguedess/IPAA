@@ -1,7 +1,7 @@
 from django.db import models
 
-from Polls.models import Acoes, Motivos, Usuarios
-from Simulation.models import Simulacoes
+from Polls.models import Acao, Motivo, Simulacao_cenarios, Usuario
+
 
 # Create your models here.
 #
@@ -13,12 +13,12 @@ class Carteiras(models.Model):
         max_length=100, help_text='Informe o nome da carteira')
 
     usuario = models.ForeignKey(
-        Usuarios, on_delete=models.CASCADE, null=False)
+        Usuario, on_delete=models.CASCADE, null=False)
 
     tipo_grupo = models.IntegerField()
 
     acoes = models.ManyToManyField(
-        Acoes, help_text='Informe as ações da carteira')
+        Acao, help_text='Informe as ações da carteira')
 
     def __str__(self):
         return self.nome
@@ -30,7 +30,7 @@ class Carteiras(models.Model):
 
 class Hist_alt_carteira(models.Model):
     acao = models.ForeignKey(
-        Acoes, on_delete=models.CASCADE, null=False)
+        Acao, on_delete=models.CASCADE, null=False)
 
     carteira = models.ForeignKey(
         Carteiras, on_delete=models.CASCADE, null=False)
@@ -38,17 +38,27 @@ class Hist_alt_carteira(models.Model):
     data_alt = models.DateTimeField(
         null=False, blank=False, auto_now_add=True)
 
-    operacao = models.IntegerField()  # 0 compra, 1 venda
+    oper = (
+        ('C', 'Compra'),
+        ('V', 'Venda'),
+    )
+
+    operacao = models.CharField(
+        max_length=1,
+        choices=oper,
+        blank=True,
+        help_text='Tipo de Operação',
+    )
 
     recomendacao_ia = models.BooleanField()
 
     seguiu_recomendacao = models.BooleanField()
 
     motivo = models.ForeignKey(
-        Motivos, on_delete=models.CASCADE, null=False)
+        Motivo, on_delete=models.CASCADE, null=False)
 
     simulacao = models.ForeignKey(
-        Simulacoes, on_delete=models.CASCADE, null=False)
+        Simulacao_cenarios, on_delete=models.CASCADE, null=False)
 
     def __str__(self):
         return self.acao
