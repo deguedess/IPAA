@@ -77,7 +77,7 @@ class Perguntas(models.Model):
     pergunta = models.CharField(
         max_length=500, help_text='Informe a pergunta')
 
-    tipo = models.BooleanField()
+    status = models.BooleanField()
 
     def __str__(self):
         return self.pergunta
@@ -126,6 +126,9 @@ class Usuarios(models.Model):
     perfil = models.ForeignKey(
         'Perfis', on_delete=models.SET_NULL, null=True)
 
+    def __str__(self):
+        return str(self.idade)
+
 
 #
 # Respostas_usuario
@@ -144,3 +147,6 @@ class Respostas_usuario(models.Model):
 
     usuario = models.ForeignKey(
         'Usuarios', on_delete=models.RESTRICT, null=False)
+
+    def __str__(self):
+        return self.resposta
