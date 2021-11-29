@@ -1,14 +1,10 @@
 
-{% extends "base_generic.html" %}
-
-{% block content %}
-  <h1>Local Library Home</h1>
-  <p>Welcome to TESTE</p>
-  <h2>Dynamic content</h2>
-  <p>The library has the following record counts:</p>
-  <ul>
-    <li><strong>Perguntas:</strong> {{ num_polls }}</li>
-    <li><strong>Respostas:</strong> {{ num_answers }}</li>
-    <li><strong>Perguntas Ativas:</strong> {{ num_polls_active }}</li>
-  </ul>
-{% endblock %}
+{% if question_list %}
+    <ul>
+    {% for Pergunta in question_list %}
+    <li><a href="{% url 'detail' Pergunta.id %}">{{ Pergunta.pergunta }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No polls are available.</p>
+{% endif %}

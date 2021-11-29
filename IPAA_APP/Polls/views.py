@@ -1,6 +1,8 @@
-from django.shortcuts import render
+from django.http.response import Http404
+from django.shortcuts import render, get_object_or_404
 
 from Polls.models import Pergunta, Resposta, Usuario
+from django.template import loader
 from django.views import generic
 
 
@@ -8,24 +10,9 @@ from django.views import generic
 
 
 def index(request):
-    """View function for home page of site."""
-
-    # Generate counts of some of the main objects
-    num_polls = Pergunta.objects.all().count()
-    num_answers = Resposta.objects.all().count()
-
-    # Available books (status = 'a')
-    num_polls_active = Pergunta.objects.filter(
-        status__exact=True).count()
-
-    context = {
-        'num_polls': num_polls,
-        'num_answers': num_answers,
-        'num_polls_active': num_polls_active,
-    }
-
-    # Render the HTML template index.html with the data in the context variable
-    return render(request, 'index.html', context=context)
+    question_list = Pergunta.objects.order_by('sequencia')
+    context = {'question_list': question_list}
+    return render(request, 'index.html', context)
 
 
 class UsuarioListView(generic.ListView):
@@ -37,3 +24,8 @@ class PerguntaListView(generic.ListView):
     context_object_name = 'Perguntas'
     queryset = Pergunta.objects.filter()[:1]
     template_name = 'books/my_arbitrary_template_name_list.html'
+
+
+def detail(request, question_id):
+    question = get_object_or_404(Pergunta, pk=question_id)
+    return render(request, 'detail.html', {'Pergunta': question})

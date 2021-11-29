@@ -80,6 +80,8 @@ class Pergunta(models.Model):
 
     status = models.BooleanField()
 
+    sequencia = models.IntegerField()
+
     def __str__(self):
         return self.pergunta
 
