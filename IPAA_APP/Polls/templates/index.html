@@ -1,10 +1,11 @@
+{% extends 'layouts/page.html' %}
 
-{% if question_list %}
-    <ul>
-    {% for Pergunta in question_list %}
-    <li><a href="{% url 'detail' Pergunta.id %}">{{ Pergunta.pergunta }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No polls are available.</p>
-{% endif %}
+{% block content %}
+<div class="page">
+<h1 class="title">Bem-Vindo</h1>
+
+    <form method="POST" action="">
+
+    </form>
+</div> 
+{% endblock %}

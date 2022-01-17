@@ -12,7 +12,13 @@ from django.views import generic
 def index(request):
     question_list = Pergunta.objects.order_by('sequencia')
     context = {'question_list': question_list}
-    return render(request, 'index.html', context)
+    return render(request, 'index.html')
+
+
+def polls(request):
+    question_list = Pergunta.objects.order_by('sequencia')
+    context = {'question_list': question_list}
+    return render(request, 'polls.html', context)
 
 
 class UsuarioListView(generic.ListView):
