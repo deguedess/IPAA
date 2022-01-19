@@ -4,15 +4,16 @@ from django.shortcuts import render, get_object_or_404
 from Polls.models import Pergunta, Resposta, Usuario
 from django.template import loader
 from django.views import generic
+from .forms import RegisterUserForm
 
 
 # Create your views here.
 
 
 def index(request):
-    question_list = Pergunta.objects.order_by('sequencia')
-    context = {'question_list': question_list}
-    return render(request, 'index.html')
+    form = RegisterUserForm()
+    context = {'form': form}
+    return render(request, 'index.html', context)
 
 
 def polls(request):

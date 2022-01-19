@@ -1,5 +1,6 @@
 from typing import Reversible
 from django.db import models
+from django.core.exceptions import ValidationError
 
 # Create your models here.
 
@@ -142,6 +143,8 @@ class Usuario(models.Model):
 
     perfil = models.ForeignKey(
         Perfil, on_delete=models.SET_NULL, null=True)
+
+    USERNAME_FIELD = 'id'
 
     def __str__(self):
         return str(self.idade)
