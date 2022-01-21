@@ -1,11 +1,11 @@
 {% extends 'layouts/page.html' %}
 
 {% block content %}
-<div class="page">
+<div class="page register-page">
 <h1 class="title">Bem-Vindo</h1>
 
     
-    <form method="POST" action=""> {% csrf_token %}
+    <form method="POST" action="" class="register-form"> {% csrf_token %}
         <div class="fieldWrapper">
             <label for="{{form.idade.id_for_label}}">Informe sua idade:</label>
                 {{form.idade}}
@@ -19,7 +19,7 @@
         </div>
 
         <div class="fieldWrapper">
-            <label for="{{form.grau_instrucao.id_for_label}}">Grau de Instrução</label>
+            <label for="{{form.grau_instrucao.id_for_label}}">Grau de Instrução:</label>
                 {{form.grau_instrucao}}
             <span class="error">{{form.grau_instrucao.errors}}</span>
         </div>

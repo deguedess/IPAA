@@ -1,5 +1,5 @@
 from django.http.response import Http404
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 
 from Polls.models import Pergunta, Resposta, Usuario
 from django.template import loader
@@ -11,8 +11,25 @@ from .forms import RegisterUserForm
 
 
 def index(request):
-    form = RegisterUserForm()
-    context = {'form': form}
+    #user_instance = get_object_or_404(Usuario)
+
+    if request.method == 'POST':
+        try:
+            form = RegisterUserForm(request.POST)
+            if form.is_valid():
+               # user_instance = form.save()
+               # user_instance.save()
+
+                return redirect('polls')
+        except Exception as e:
+            print(e)
+            raise
+
+    context = {
+        'form': form,
+
+    }
+
     return render(request, 'index.html', context)
 
 

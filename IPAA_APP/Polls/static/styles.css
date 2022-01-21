@@ -69,8 +69,8 @@ blockquote {
 .login-page,
 .register-page {
   margin: 0 auto;
-  min-width: 50%;
-  max-width: 50%;
+  min-width: 80%;
+  max-width: 80%;
 }
 
 .title {
@@ -110,7 +110,7 @@ blockquote {
 }
 
 .fieldWrapper label {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
   text-transform: uppercase;
   margin-bottom: 10px;
