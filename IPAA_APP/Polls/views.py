@@ -1,5 +1,6 @@
 from django.http.response import Http404
 from django.shortcuts import render, get_object_or_404, redirect
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from Polls.models import Pergunta, Resposta, Usuario
 from django.template import loader
@@ -11,16 +12,17 @@ from .forms import RegisterUserForm
 
 
 def index(request):
-    #user_instance = get_object_or_404(Usuario)
+    form = RegisterUserForm()
 
     if request.method == 'POST':
         try:
             form = RegisterUserForm(request.POST)
             if form.is_valid():
-               # user_instance = form.save()
-               # user_instance.save()
-
+                form.save()
                 return redirect('polls')
+            else:
+                for field in form:
+                    print("Field Error:", field.name,  field.errors)
         except Exception as e:
             print(e)
             raise
@@ -48,6 +50,11 @@ class PerguntaListView(generic.ListView):
     context_object_name = 'Perguntas'
     queryset = Pergunta.objects.filter()[:1]
     template_name = 'books/my_arbitrary_template_name_list.html'
+
+
+class UserCreate(CreateView):
+    model = Usuario
+    fields = ['idade', 'genero', 'grau_instrucao', 'profissao']
 
 
 def detail(request, question_id):

@@ -122,7 +122,7 @@ class Usuario(models.Model):
 
     sexo = (
         ('m', 'Masculino'),
-        ('f', 'Femenino'),
+        ('f', 'Feminino'),
     )
 
     genero = models.CharField(

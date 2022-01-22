@@ -1,12 +1,17 @@
+import datetime
+
 from dataclasses import field
 from django.core.exceptions import NON_FIELD_ERRORS
 from django import forms
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 from Polls.models import Usuario
 #from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
+from django.utils.translation import ugettext_lazy as _
 
 
-class RegisterUserForm(forms.Form):
+class RegisterUserForm(forms.ModelForm):
     class Meta:
         model = Usuario
         fields = "__all__"
@@ -20,3 +25,7 @@ class RegisterUserForm(forms.Form):
                 'autofocus': True
             })
         }
+
+    def __init__(self, *args, **kwargs):
+        super(RegisterUserForm, self).__init__(*args, **kwargs)
+        self.fields['perfil'].required = False
