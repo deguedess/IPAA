@@ -5,7 +5,7 @@ from django.core.exceptions import NON_FIELD_ERRORS
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
-from Polls.models import Respostas_usuario, Usuario
+from Polls.models import Pergunta, Respostas_usuario, Usuario
 #from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
@@ -32,7 +32,10 @@ class RegisterUserForm(forms.ModelForm):
         self.fields['genero'].required = True
 
 
-class RegisterRepostas(forms.ModelForm):
+class Perguntas(forms.ModelForm):
     class Meta:
-        model = Respostas_usuario
+        model = Pergunta
         fields = "__all__"
+
+    def __init__(self, *args, **kwargs):
+        super(Perguntas, self).__init__(*args, **kwargs)
