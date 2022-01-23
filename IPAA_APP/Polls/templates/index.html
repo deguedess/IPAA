@@ -2,8 +2,11 @@
 
 {% block content %}
 <div class="page register-page">
-<h1 class="title">Bem-Vindo</h1>
-
+    <div class="header">
+    <h1 class="title">Bem-Vindo</h1>
+    </div>
+    <h3 class="subtitle">Por favor, informe seus dados abaixo:</h3>
+    
     
     <form method="POST" action="" class="register-form"> {% csrf_token %}
         <div class="fieldWrapper">
@@ -40,4 +43,5 @@
         <input type="submit" value="Próximo" class="submit-button"/>
     </form>
 </div> 
+
 {% endblock %}

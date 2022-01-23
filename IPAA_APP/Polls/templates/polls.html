@@ -1,19 +1,34 @@
 {% extends 'layouts/page.html' %}
 
-<div class="page">
-    <div class="question-list-item">
-        {% block content %}
-            {% if question_list %}
-                <ul>
-                {% for Pergunta in question_list %}
-                <div class="question-list-item-title">
-                    <li><a href="{% url 'detail' Pergunta.id %}">{{ Pergunta.pergunta }}</a></li>
-                </div>
-                {% endfor %}
-                </ul>
-            {% else %}
-                <p>No polls are available.</p>
-            {% endif %}
-        {% endblock %}
+{% block content %}
+<div class="page register-page">
+    <div class="header">
+        <h1 class="title">Perfil de Investidor</h1>
     </div>
+    <h3 class="subtitle">Responda as perguntas abaixo para identificar seu perfil de investidor</h3>
+
+    <form method="POST" action="" class="register-form"> {% csrf_token %}
+        <div class="question-list-item">
+                {% if question_list %}
+                    <ul>
+                    {% for Pergunta in question_list %}
+                    <div class="question-list-item-title">
+                        <li>{{ Pergunta.pergunta }}</li>
+                        <ul>
+                        {% for Resposta in Pergunta.resposta_set.all %}
+                        <div class="question-list-item">
+                            <li><input type="radio" name={{ Pergunta.id }}/>{{ Resposta.resposta }}</li>
+                        </div>
+                        {% endfor %}
+                        </ul>
+                    </div>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+            
+        </div>
+
+        <input type="submit" value="Próximo" class="submit-button"/>
+    </form>
 </div>
+{% endblock %}

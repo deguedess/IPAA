@@ -5,7 +5,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from Polls.models import Pergunta, Resposta, Usuario
 from django.template import loader
 from django.views import generic
-from .forms import RegisterUserForm
+from .forms import RegisterRepostas, RegisterUserForm
 
 
 # Create your views here.
@@ -36,8 +36,12 @@ def index(request):
 
 
 def polls(request):
+
+    form = RegisterRepostas()
+
     question_list = Pergunta.objects.order_by('sequencia')
     context = {'question_list': question_list}
+
     return render(request, 'polls.html', context)
 
 
