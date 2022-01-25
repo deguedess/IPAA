@@ -29,7 +29,7 @@ class ProfissaoAdmin(admin.ModelAdmin):
 
 @admin.register(Perfil)
 class PerfilAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('nome', 'peso_inicial', 'peso_final', 'tipo')
 
 
 @admin.register(Pergunta)

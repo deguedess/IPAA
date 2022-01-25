@@ -15,7 +15,7 @@ class Carteiras(models.Model):
     usuario = models.ForeignKey(
         Usuario, on_delete=models.CASCADE, null=False)
 
-    tipo_grupo = models.IntegerField()
+    tipo_grupo = models.IntegerField()  # 0 = IA, 1 = Manual
 
     acoes = models.ManyToManyField(
         Acao, help_text='Informe as ações da carteira')

@@ -3,9 +3,11 @@ from django.http.response import Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
-from Polls.models import Pergunta, Resposta, Usuario
+from Polls.models import Pergunta, Resposta, Usuario, Acao
 from django.template import loader
 from django.views import generic
+
+from Polls.portfolio import calculaPortfolio
 from .forms import RegisterUserForm, SurveyForm, PortfolioForm
 
 
@@ -62,7 +64,14 @@ def polls(request):
 def portfolio(request):
     form = PortfolioForm()
 
+    perf = calculaPortfolio.verificaPerfil(request.session['usuario'])
+
+# mudar pra buscar cfe perfil e o 0
+    cart = calculaPortfolio.criaCarteira(
+        request.session['usuario'], 0, Acao.objects.order_by('codigo'))
+
     context = {
+        "perf": perf,
         "form": form,
     }
     return render(request, 'portfolio.html', context)
