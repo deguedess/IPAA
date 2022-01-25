@@ -23,6 +23,10 @@ class Carteiras(models.Model):
     def __str__(self):
         return self.nome
 
+    class Meta:
+        verbose_name = 'Carteira'
+        verbose_name_plural = 'Carteiras'
+
 
 #
 # Historico da carteira

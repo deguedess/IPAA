@@ -6,7 +6,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from Polls.models import Pergunta, Resposta, Usuario
 from django.template import loader
 from django.views import generic
-from .forms import Perguntas, RegisterUserForm
+from .forms import Perguntas, RegisterUserForm, SurveyForm
 
 
 # Create your views here.
@@ -38,31 +38,25 @@ def index(request):
 
 
 def polls(request):
-
-    form = Perguntas()
-    question_list = Pergunta.objects.order_by('sequencia')
-    form.usuario = request.session['usuario']
-
-    #question = get_object_or_404(Question, pk=question_id)
-    #selected_choice = question.choice_set.get(pk=request.POST['choice'])
+    form = SurveyForm()
 
     if request.method == 'POST':
         try:
-            print('')
-            for perg in question_list:
-                print(perg.id)
-                #selected_choice = perg.resposta_set.get(pk=request.POST['perg']+perg.id)
-                # print(selected_choice)
-
+            form = SurveyForm(request.POST)
+            if form.is_valid():
+                form = form.save(request.session['usuario'])
+                #request.session['usuario'] = user.id
+                # return redirect('polls')
+            else:
+                for field in form:
+                    print("Field Error:", field.name,  field.errors)
         except Exception as e:
             print(e)
             raise
 
     context = {
-        'question_list': question_list,
-        'form': form,
+        "form": form,
     }
-
     return render(request, 'polls.html', context)
 
 

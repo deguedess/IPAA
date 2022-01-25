@@ -5,7 +5,7 @@ from django.core.exceptions import NON_FIELD_ERRORS
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
-from Polls.models import Pergunta, Respostas_usuario, Usuario
+from Polls.models import Pergunta, Resposta, Respostas_usuario, Usuario
 #from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
@@ -39,3 +39,33 @@ class Perguntas(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(Perguntas, self).__init__(*args, **kwargs)
+
+
+class SurveyForm(forms.Form):
+
+    #question_1 = forms.ChoiceField(widget=forms.RadioSelect, choices=())
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        #del self.fields["question_1"]
+        for pergunta in Pergunta.objects.order_by('sequencia'):
+            respostas = [(resposta.id, resposta.resposta)
+                         for resposta in pergunta.resposta_set.all()]
+            self.fields[f"pergunta_{pergunta.id}"] = forms.ChoiceField(
+                widget=forms.RadioSelect, choices=respostas)
+            self.fields[f"pergunta_{pergunta.id}"].label = pergunta.pergunta
+
+    def save(self, userid):
+        data = self.cleaned_data
+        print("Chegou no save :D")
+        print(data)
+
+        for pergunta in Pergunta.objects.order_by('sequencia'):
+            choice = Resposta.objects.get(pk=data[f"pergunta_{pergunta.id}"])
+
+            resp_user = Respostas_usuario()
+            resp_user.data_inicial = datetime.datetime.now()
+            resp_user.usuario = Usuario.objects.get(pk=userid)
+            resp_user.resposta = choice
+            resp_user.save()

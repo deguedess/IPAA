@@ -15,6 +15,10 @@ class Motivo(models.Model):
     def __str__(self):
         return self.nome
 
+    class Meta:
+        verbose_name = 'Motivo'
+        verbose_name_plural = '4. Motivos'
+
 #
 # Grau de instrução
 
@@ -26,6 +30,10 @@ class Grau_Instrucao(models.Model):
     def __str__(self):
         return self.nome
 
+    class Meta:
+        verbose_name = 'Grau de Instrução'
+        verbose_name_plural = '2. Graus de Instrução'
+
 #
 # Profissão
 
@@ -36,6 +44,10 @@ class Profissao(models.Model):
 
     def __str__(self):
         return self.nome
+
+    class Meta:
+        verbose_name = 'Profissão'
+        verbose_name_plural = '3. Profissões'
 
 #
 # Ações
@@ -51,6 +63,9 @@ class Acao(models.Model):
     def __str__(self):
         return self.codigo
 
+    class Meta:
+        verbose_name = 'Ação'
+        verbose_name_plural = '5. Ações'
 
 #
 # Perfis
@@ -70,6 +85,9 @@ class Perfil(models.Model):
     def __str__(self):
         return self.nome
 
+    class Meta:
+        verbose_name = 'Perfil'
+        verbose_name_plural = '1. Perfis'
 
 #
 # Perguntas
@@ -90,6 +108,9 @@ class Pergunta(models.Model):
         """Returns the url to access a detail record for this book."""
         return Reversible('poll-detail', args=[str(self.id)])
 
+    class Meta:
+        verbose_name = 'Pergunta'
+        verbose_name_plural = '6. Perguntas'
 
 #
 # Respostas
@@ -110,6 +131,10 @@ class Resposta(models.Model):
 
     def __str__(self):
         return self.resposta
+
+    class Meta:
+        verbose_name = 'Resposta'
+        verbose_name_plural = '7. Respostas'
 
 
 #
@@ -149,6 +174,9 @@ class Usuario(models.Model):
     def __str__(self):
         return str(self.idade)
 
+    class Meta:
+        verbose_name = 'Usuário'
+        verbose_name_plural = '8. Usuários'
 
 #
 # Respostas_usuario
@@ -169,7 +197,11 @@ class Respostas_usuario(models.Model):
         Usuario, on_delete=models.RESTRICT, null=False)
 
     def __str__(self):
-        return self.resposta
+        return self.resposta.resposta
+
+    class Meta:
+        verbose_name = 'Resposta do Usuário'
+        verbose_name_plural = '99. Respostas dos Usuários'
 
 
 # Simulação
@@ -190,3 +222,7 @@ class Simulacao_cenarios(models.Model):
 
     def __str__(self):
         return self.nome
+
+    class Meta:
+        verbose_name = 'Simulação'
+        verbose_name_plural = '9. Simulações'

@@ -1,6 +1,7 @@
 from django.contrib import admin
 
-from Polls.models import Acao, Grau_Instrucao, Motivo, Perfil, Pergunta, Profissao, Resposta, Simulacao_cenarios
+from Polls.models import Acao, Grau_Instrucao, Motivo, Perfil, Pergunta, Profissao, Resposta, Simulacao_cenarios, Usuario, Respostas_usuario
+from Portfolio.models import Carteiras
 
 
 # Register your models here.
@@ -46,3 +47,19 @@ class RespostaAdmin(admin.ModelAdmin):
 @admin.register(Simulacao_cenarios)
 class PerfilAdmin(admin.ModelAdmin):
     pass
+
+
+@admin.register(Usuario)
+class Usuario(admin.ModelAdmin):
+    list_display = ('idade', 'genero', 'grau_instrucao',
+                    'profissao', 'data_cadastro', 'perfil')
+
+
+@admin.register(Respostas_usuario)
+class Resposta_usuario(admin.ModelAdmin):
+    list_display = ('usuario', 'resposta', 'data_final')
+
+
+@admin.register(Carteiras)
+class Carteira(admin.ModelAdmin):
+    list_display = ('nome', 'usuario', 'tipo_grupo')

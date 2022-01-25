@@ -6,25 +6,10 @@
         <h1 class="title">Perfil de Investidor</h1>
     </div>
     <h3 class="subtitle">Responda as perguntas abaixo para identificar seu perfil de investidor</h3>
-
     <form method="POST" action="" class="register-form"> {% csrf_token %}
         <div class="question-list-item">
-            <ul>
-            {% for Pergunta in question_list %}
-            <div class="question-list-item-title">
-                <li>{{ Pergunta.pergunta }}</li>
-                <ul>
-                {% for Resposta in Pergunta.resposta_set.all %}
-                <div class="question-list-item">
-                    <li><input type="radio" name="Perg{{ Pergunta.id }}" value={{ Resposta.id }}/>{{ Resposta.resposta }}</li>
-                </div>
-                {% endfor %}
-                </ul>
-            </div>
-            {% endfor %}
-            </ul>
+            {{ form.as_p }}
         </div>
-
         <input type="submit" value="Próximo" class="submit-button"/>
     </form>
 </div>
