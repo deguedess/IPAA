@@ -103,7 +103,7 @@ blockquote {
   color: black;
 }
 
-.question-list-item-title {
+.question-list-item {
   color: black;
   font-size: 18px;
   font-weight: 700;
@@ -113,11 +113,26 @@ blockquote {
   background-color: #f8f8f8;
 }
 
-.question-list-item {
+.question-list-item p {
+  margin-bottom: 10px;
+  margin-top: 20px;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.question-list-item ul li {
   margin-bottom: 10px;
   margin-top: 10px;
-  font-weight: 600;
-  font-size: 14px;
+  font-weight: 500;
+  font-size: 13px;
+}
+
+.profile {
+  margin: 5px auto 20px auto;
+  font-weight: 900;
+  font-size: 30px;
+  text-align: center;
+  color: #417690;
 }
 
 .question-list-item-author {

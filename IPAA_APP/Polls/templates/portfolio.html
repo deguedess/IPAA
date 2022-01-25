@@ -1,0 +1,23 @@
+{% extends 'layouts/page.html' %}
+
+{% block content %}
+<div class="page register-page">
+    <div class="header">
+        <h1 class="title">Identificação do seu Perfil</h1>
+    </div>
+    <h3 class="subtitle">Com base nas respostas anteriores, o perfil indicado para você é:</h3>
+
+    <div class="profile">
+            PERFIL ABC
+    </div>
+
+    <h3 class="subtitle">As Ações recomendadas para você são:</h3>
+
+    <form method="POST" action="" class="register-form"> {% csrf_token %}
+        <div class="question-list-item">
+            {{ form.as_p }}
+        </div>
+        <input type="submit" value="Próximo" class="submit-button"/>
+    </form>
+</div>
+{% endblock %}

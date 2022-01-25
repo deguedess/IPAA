@@ -6,7 +6,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from Polls.models import Pergunta, Resposta, Usuario
 from django.template import loader
 from django.views import generic
-from .forms import Perguntas, RegisterUserForm, SurveyForm
+from .forms import RegisterUserForm, SurveyForm, PortfolioForm
 
 
 # Create your views here.
@@ -45,8 +45,7 @@ def polls(request):
             form = SurveyForm(request.POST)
             if form.is_valid():
                 form = form.save(request.session['usuario'])
-                #request.session['usuario'] = user.id
-                # return redirect('polls')
+                return redirect('portfolio')
             else:
                 for field in form:
                     print("Field Error:", field.name,  field.errors)
@@ -58,6 +57,15 @@ def polls(request):
         "form": form,
     }
     return render(request, 'polls.html', context)
+
+
+def portfolio(request):
+    form = PortfolioForm()
+
+    context = {
+        "form": form,
+    }
+    return render(request, 'portfolio.html', context)
 
 
 class UsuarioListView(generic.ListView):

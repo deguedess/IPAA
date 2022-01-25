@@ -5,7 +5,7 @@ from django.core.exceptions import NON_FIELD_ERRORS
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
-from Polls.models import Pergunta, Resposta, Respostas_usuario, Usuario
+from Polls.models import Acao, Pergunta, Resposta, Respostas_usuario, Usuario
 #from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
@@ -58,8 +58,6 @@ class SurveyForm(forms.Form):
 
     def save(self, userid):
         data = self.cleaned_data
-        print("Chegou no save :D")
-        print(data)
 
         for pergunta in Pergunta.objects.order_by('sequencia'):
             choice = Resposta.objects.get(pk=data[f"pergunta_{pergunta.id}"])
@@ -69,3 +67,15 @@ class SurveyForm(forms.Form):
             resp_user.usuario = Usuario.objects.get(pk=userid)
             resp_user.resposta = choice
             resp_user.save()
+
+
+class PortfolioForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # mudar para buscar cfe usuario
+        for acao in Acao.objects.order_by('codigo'):
+            self.fields[f"acao_{acao.id}"] = forms.BooleanField(
+                required=False, initial=True)
+            self.fields[f"acao_{acao.id}"].label = acao.codigo + \
+                ' - ' + acao.nome
