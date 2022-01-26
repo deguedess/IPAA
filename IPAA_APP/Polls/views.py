@@ -62,17 +62,23 @@ def polls(request):
 
 
 def portfolio(request):
-    form = PortfolioForm()
+    userid = request.session['usuario']
 
-    perf = calculaPortfolio.verificaPerfil(request.session['usuario'])
+    tipo = userid % 2
+    print(tipo)
+
+    form = PortfolioForm(tipo)
+
+    perf = calculaPortfolio.verificaPerfil(userid)
 
 # mudar pra buscar cfe perfil e o 0
     cart = calculaPortfolio.criaCarteira(
-        request.session['usuario'], 0, Acao.objects.order_by('codigo'))
+        userid, tipo, Acao.objects.order_by('codigo'))
 
     context = {
         "perf": perf,
         "form": form,
+        "cart": cart,
     }
     return render(request, 'portfolio.html', context)
 

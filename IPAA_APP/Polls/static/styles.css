@@ -135,6 +135,14 @@ blockquote {
   color: #417690;
 }
 
+.grupo-cart {
+  margin: 20px auto 30px auto;
+  font-weight: 600;
+  font-size: 20px;
+  text-align: center;
+  color: #417690;
+}
+
 .question-list-item-author {
   color: lightgray;
   margin: 0;

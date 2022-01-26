@@ -70,12 +70,12 @@ class SurveyForm(forms.Form):
 
 
 class PortfolioForm(forms.Form):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, tipo, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         # mudar para buscar cfe usuario
         for acao in Acao.objects.order_by('codigo'):
             self.fields[f"acao_{acao.id}"] = forms.BooleanField(
-                required=False, initial=True)
+                required=False, initial=True if tipo == 0 else False)
             self.fields[f"acao_{acao.id}"].label = acao.codigo + \
                 ' - ' + acao.nome

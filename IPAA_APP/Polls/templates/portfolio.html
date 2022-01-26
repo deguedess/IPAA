@@ -8,19 +8,28 @@
     <h3 class="subtitle">Com base nas respostas anteriores, o perfil indicado para você é:</h3>
 
     <div class="profile">
-            {{ perf }}
+            <u>{{ perf }}</u>
     </div>
-
-    <h3 class="subtitle">As Ações recomendadas para você são:</h3>
+    
+    {% if cart.tipo_grupo == 0 %}
+        <h3 class="grupo-cart">
+            Você foi selecionado para o grupo de <b>recomendações da inteligência artificial.</b></br>
+            Portanto, as Ações recomendadas para você são: 
+        </h3>
+    {% else %}
+        <h3 class="grupo-cart">
+            Você está no grupo de criação <b>manual</b> de carteira e <b><u>não</u></b> receberá recomendações da inteligência artificial.</br>
+            Por favor, selecione abaixo quais dessas ações você gostaria de ter na sua carteira: 
+        </h3>
+    {% endif %} 
 
     <form method="POST" action="" class="register-form"> {% csrf_token %}
         <div class="question-list-item">
             {{ form.as_p }}
         </div>
-        <div class="question-list-item-motivo">
-
-        </div>
         <input type="submit" value="Próximo" class="submit-button"/>
     </form>
 </div>
+
+
 {% endblock %}

@@ -26,7 +26,9 @@ class calculaPortfolio():
 
         return perf
 
+
 # metodo para criação da carteira inicial
+
     def criaCarteira(userid, tipoGrupo, acoes):
         cart = Carteiras()
         cart.usuario = Usuario.objects.get(pk=userid)
@@ -34,7 +36,8 @@ class calculaPortfolio():
         cart.nome = 'Carteira ' + 'Automática' if tipoGrupo == 0 else 'Manual'
         cart.save()
         cart.acoes.set(acoes)
-        return cart.save()
+        cart.save()
+        return cart
 
     def salvaPortfolio(carteira, acoesSelected):
         # se for manual
@@ -67,7 +70,6 @@ class calculaPortfolio():
 
 
 # metodo para verificar quais as ações se encaixam no perfil
-
 
     def calculaAcoes():
         pass
