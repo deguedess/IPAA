@@ -21,7 +21,7 @@ class Carteiras(models.Model):
         Acao, help_text='Informe as ações da carteira')
 
     def __str__(self):
-        return self.nome
+        return str(self.usuario.id) + " - " + self.nome
 
     class Meta:
         verbose_name = 'Carteira'
@@ -65,4 +65,8 @@ class Hist_alt_carteira(models.Model):
         Simulacao_cenarios, on_delete=models.CASCADE, null=False)
 
     def __str__(self):
-        return self.acao
+        return self.carteira.nome
+
+    class Meta:
+        verbose_name = 'Histórico Carteira'
+        verbose_name_plural = 'Histórico Carteiras'

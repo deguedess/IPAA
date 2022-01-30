@@ -6,6 +6,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 from Polls.models import Acao, Pergunta, Resposta, Respostas_usuario, Usuario
+from Portfolio.models import Carteiras
 #from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
@@ -70,12 +71,40 @@ class SurveyForm(forms.Form):
 
 
 class PortfolioForm(forms.Form):
-    def __init__(self, tipo, *args, **kwargs):
+    def __init__(self, acoes, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+        acoesAll = Acao.objects.order_by('codigo')
+
+# adiciona todas as ações recomendadas antes
+        if (acoes != None):
+            for acao in acoes:
+                # remove essa ação da lista geral para nao duplicar
+                acoesAll = acoesAll.exclude(pk=acao.id)
+
+                criaCamposForm.criaCamposBool(self, acao, True)
+
+# adiciona o restante
+        for acao in acoesAll:
+            criaCamposForm.criaCamposBool(self, acao, False)
+
+    def save(self):
+        data = self.cleaned_data
+
+        selected = []
 
         # mudar para buscar cfe usuario
         for acao in Acao.objects.order_by('codigo'):
-            self.fields[f"acao_{acao.id}"] = forms.BooleanField(
-                required=False, initial=True if tipo == 0 else False)
-            self.fields[f"acao_{acao.id}"].label = acao.codigo + \
-                ' - ' + acao.nome
+            checked = data[f"acao_{acao.id}"]
+            if (checked):
+                selected.append(acao)
+
+        return selected
+
+
+class criaCamposForm():
+    def criaCamposBool(form, obj, init):
+        form.fields[f"acao_{obj.id}"] = forms.BooleanField(
+            required=False, initial=init)
+        form.fields[f"acao_{obj.id}"].label = obj.codigo + \
+            ' - ' + obj.nome

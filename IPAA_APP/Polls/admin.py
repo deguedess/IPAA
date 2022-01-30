@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from Polls.models import Acao, Grau_Instrucao, Motivo, Perfil, Pergunta, Profissao, Resposta, Simulacao_cenarios, Usuario, Respostas_usuario
-from Portfolio.models import Carteiras
+from Portfolio.models import Carteiras, Hist_alt_carteira
 
 
 # Register your models here.
@@ -9,7 +9,7 @@ from Portfolio.models import Carteiras
 
 @admin.register(Motivo)
 class MotivoAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('id', 'nome')
 
 
 @admin.register(Acao)
@@ -63,3 +63,10 @@ class Resposta_usuario(admin.ModelAdmin):
 @admin.register(Carteiras)
 class Carteira(admin.ModelAdmin):
     list_display = ('nome', 'usuario', 'tipo_grupo')
+
+
+@admin.register(Hist_alt_carteira)
+class Hist_alt_carteira(admin.ModelAdmin):
+    list_display = ('data_alt', 'carteira', 'operacao',
+                    'acao', 'recomendacao_ia', 'seguiu_recomendacao', 'simulacao')
+    list_filter = ('carteira', 'acao')

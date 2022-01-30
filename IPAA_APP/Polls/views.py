@@ -1,9 +1,8 @@
-import datetime
 from django.http.response import Http404
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.edit import CreateView
 
-from Polls.models import Pergunta, Resposta, Usuario, Acao
+from Polls.models import Pergunta, Usuario, Acao
 from django.template import loader
 from django.views import generic
 
@@ -65,15 +64,31 @@ def portfolio(request):
     userid = request.session['usuario']
 
     tipo = userid % 2
-    print(tipo)
-
-    form = PortfolioForm(tipo)
 
     perf = calculaPortfolio.verificaPerfil(userid)
 
-# mudar pra buscar cfe perfil e o 0
+    # TODO
+    acoesRec = None
+
+    if (tipo == 0):
+        acoesRec = Acao.objects.order_by('codigo')[:3]
+
     cart = calculaPortfolio.criaCarteira(
-        userid, tipo, Acao.objects.order_by('codigo'))
+        userid, tipo, acoesRec)
+
+    form = PortfolioForm(cart.acoes.all())
+
+    if request.method == 'POST':
+        form = PortfolioForm(acoesRec, request.POST)
+
+        if form.is_valid():
+            selected = form.save()
+
+            calculaPortfolio.salvaPortfolio(cart, selected, acoesRec)
+
+        else:
+            for field in form:
+                print("Field Error:", field.name,  field.errors)
 
     context = {
         "perf": perf,

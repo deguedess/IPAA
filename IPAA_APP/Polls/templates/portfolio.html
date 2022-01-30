@@ -24,9 +24,10 @@
     {% endif %} 
 
     <form method="POST" action="" class="register-form"> {% csrf_token %}
-        <div class="question-list-item">
-            {{ form.as_p }}
+        <div class="question-list-item" >
+            {{ form.as_ul }}
         </div>
+        
         <input type="submit" value="Próximo" class="submit-button"/>
     </form>
 </div>
